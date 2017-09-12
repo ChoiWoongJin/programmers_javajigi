@@ -1,6 +1,9 @@
 package test.choi.third;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
 public class calendar {
 
@@ -10,6 +13,21 @@ public class calendar {
 	private final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private final String[] GET_DAY = { "일", "월", "화", "수", "목", "금", "토" };
+	private HashMap<Date, String> planMap;
+	
+	public calendar() {
+		planMap = new HashMap<Date, String>();
+	}
+	
+	public void registPlan(String strDate, String plan) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		planMap.put(date, plan);
+	}
+	public String searchPlan(String strDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		String plan = planMap.get(date);
+		return plan;
+	}
 
 	public boolean isLeapYear(int year) {
 		if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
