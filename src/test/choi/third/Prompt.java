@@ -2,8 +2,7 @@ package test.choi.third;
 
 import java.io.BufferedReader; // scanner로는 장문의 문장 입력이 제한되어 BufferedReader 사용
 import java.io.IOException; // scanner로는 장문의 문장 입력이 제한되어 BufferedReader 사용
-import java.io.InputStream; // scanner로는 장문의 문장 입력이 제한되어 BufferedReader 사용
-import java.io.InputStreamReader;
+import java.io.InputStreamReader; // scanner로는 장문의 문장 입력이 제한되어 BufferedReader 사용
 import java.text.ParseException;
 import java.util.Scanner;
 
@@ -12,29 +11,36 @@ public class Prompt {
 		Scanner scanner = new Scanner(System.in);
 		calendar cal = new calendar();
 		String menu = "";
-		
-		while (true) {			
+		boolean exit = true;
+
+		while (exit) {
 			printMenu(); // 메뉴를 출력
-			
+
 			System.out.print("명령 (1, 2, 3, h, q)\n> ");
 			menu = scanner.next();
-			
-			if(menu.equals("1")) { // 1. 일정 등록
+
+			switch (menu) {
+			case "1": // 1. 일정 등록
 				menuRegist(scanner, cal);
-			} else if(menu.equals("2")) { // 2. 일정 검색
+				break;
+			case "2": // 2. 일정 검색
 				menuSearch(scanner, cal);
-			} else if(menu.equals("3")) { // 3. 달력 보기 (완료)
+				break;
+			case "3": // 3. 달력 보기 (완료)
 				menuCal(scanner, cal);
-			} else if(menu.equals("h")) { // h. 도움말
+				break;
+			case "h": // h. 도움말
 				menuHelp();
-			} else if(menu.equals("q")) { // q. 종료 (완료)
+				break;
+			case "q": // q. 종료 (완료)
+				exit = false;
 				break;
 			}
 		}
 		System.out.println("Have a nice day!");
 		scanner.close();
 	}
-	
+
 	public void printMenu() {
 		System.out.println("+----------------------+");
 		System.out.println("| 1. 일정 등록           ");
@@ -43,16 +49,18 @@ public class Prompt {
 		System.out.println("| h. 도움말 q. 종료");
 		System.out.println("+----------------------+");
 	}
-	
+
 	/**
 	 * 일정을 등록
+	 * 
 	 * @param scanner
 	 * @param cal
-	 * @throws ParseException : 메뉴로 돌아감
+	 * @throws ParseException
+	 *             : 메뉴로 돌아감
 	 */
 	public void menuRegist(Scanner scanner, calendar cal) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		System.out.println("[일정 등록]");
 		System.out.print("날짜를 입력해 주세요.(yyyy-MM-dd)\n> ");
 		String strDate = scanner.next();
@@ -64,7 +72,7 @@ public class Prompt {
 			System.out.println("내용 입력 중 오류가 발생했습니다. 메뉴로 돌아갑니다");
 			return;
 		}
-		
+
 		try {
 			cal.registPlan(strDate, plan);
 		} catch (ParseException e) {
@@ -72,7 +80,7 @@ public class Prompt {
 			return;
 		}
 	}
-	
+
 	public void menuSearch(Scanner scanner, calendar cal) {
 		System.out.println("[일정 검색]");
 		System.out.print("날짜를 입력해 주세요.(yyyy-MM-dd)\n> ");
@@ -86,14 +94,14 @@ public class Prompt {
 		}
 		System.out.println("일정 : " + plan);
 	}
-	
+
 	public void menuCal(Scanner scanner, calendar cal) {
 		int month = 0, year = 0;
-		
+
 		System.out.println("년도를 입력하세요");
 		System.out.print("YEAR> ");
 		year = scanner.nextInt(); // 년도를 키보드로 입력받는다
-		if(year < 0) {
+		if (year < 0) {
 			System.out.println("년도 입력이 잘 못 되었습니다.");
 			return;
 		}
@@ -104,12 +112,12 @@ public class Prompt {
 			System.out.println("달의 입력이 잘 못 되었습니다.");
 			return;
 		}
-		
+
 		cal.printCalendar(year, month); // 달력의 모양 출력
 	}
-	
+
 	public void menuHelp() {
-		
+
 	}
 
 	public static void main(String[] args) {
