@@ -25,10 +25,20 @@ public class calendar {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		calendar cal = new calendar();
-		System.out.println("달을 입력하세요");
-		int month = scanner.nextInt();
 
-		System.out.printf("%d월은 %d일까지 있습니다.\n", month, cal.maxDaysOfMonth(month));
+		System.out.println("반복 횟수를 입력하세요.");
+		int repeat = scanner.nextInt();
+		
+		int[] month = new int[repeat];
+
+		System.out.println("달을 입력하세요");
+		for (int i = 0; i < repeat; i++) {
+			month[i] = scanner.nextInt();
+		}
+
+		for (int i = 0; i < repeat; i++) {
+			System.out.printf("%d월은 %d일까지 있습니다.\n", month[i], cal.maxDaysOfMonth(month[i]));
+		}
 		scanner.close();
 	}
 
